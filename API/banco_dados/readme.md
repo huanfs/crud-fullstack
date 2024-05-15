@@ -6,6 +6,8 @@
 
 ## linha à linha:
 
+**Método .Create**
+
 1. importando o framework express, em projetos node puros a importação se dá pelo método **require** do node, e em outros casos basta usar a palavra reservada **import**.
 
 3. importando o **CORS**. após instalar o cors com o comando `npm install cors`, basta importar dentro do arquivo de servidor. o cors permite que diferentes aplicações possam se conectar através da internet a partir de algumas configurações.
@@ -40,5 +42,55 @@
 
 40. o bloco **catch** realiza um console.log de uma mensagem e exibe o erro obtido na tentativa do bloco **try**.
 
-44. usamos o método **.listen** para indicar em qual rota o servidor inteiro irá rodar passando como primeiro argumento a rota, este método tambem recebe uma função de callback que pode ser executada quando o servidor estiver rodando.
+---
+
+**Método Update**
+
+44. criamos a rota **/atualizar** que utiliza o método **post** para enviar e receber dados do servidor. e passamos uma função assíncrona que recebe os parametros de requisição e resposta(**req e res**). a função passadaé assíncrona pois a rota /atualizar vai executar a função **update** que demora um tempo até ser concluída.
+
+45. criamos o bloco **try** para tratar caso tudo esteja correto.
+- nas linhas 46, 47 e 48 criamos 3 variáveis que vão respectivamente, receber o valor antigo da tabela, o novo valor a ser inserido na tabela e o nome da coluna onde estas informações serão atualizadas.
+
+50. na linha 50 criamos uma função assíncrona para atualizar os dados.
+
+51. na linha 51 criamos uma varável e passamos para ela `await MeuBanco.update()` que é o método de atualização de dados em tabelas.
+- nas linhas 52 e 53 nós estamos criando variáveis no servidor que vão receber as variáveis passadas pelo front-end através do **body-parser**
+> aqui nós temos alguns detalhes importantes onde, por exemplo, não é possível passar umva variável diretamente como nome da coluna, então aqui nós estamos passando onde é a especificação da coluna a variável correspondente a coluna dentro de colchetes (como se fosse um array) da seguinte forma: `{[variavel_coluna] : variavel_novo_valor}, {where : {[variavel_coluna] : variavel_novo_valor}}`. se não forem colocados os colchetes será impresso um erro onde o Sequelize não irá entender os valores da coluna da tabela!
+**whereClause** : o whereClause é uma forma de definir condições de busca (where) de forma dinâmica onde primeiro nós chamamos o whereClause da seguinte forma : `const whereClause = {}` agora podemos dentro do whereClause passar tanto a variável com o nome da coluna como o novo valor (ou o valor antigo) da seguinte forma: `whereClause[variavel_coluna] = variavel_novo_valor_ou_antigo_valor`.
+
+56. na linha 56 chamamos a função que acabamos de criar.
+
+57. aqui temos o bloco de tratamento de erros **catch** tratando as mensagens de erro caso haja algum problema com a atualização dos dados no banco de dados.
+
+---
+
+**Método Destroy**
+
+62. aqui nós criamos uma rota **/remover** com o método post para enviar ou receber dados do servidor. passamos uma função assíncrona que recebe os parâmetros de requisição e de resposta (**req e res**) para realizar as operações de eliminação de dado na tabela.
+
+63. na linha 63 criamos o bloco de tratamento **try**.
+- nas linhas 64 e 65 nós criamos duas variáveis que vão receber 2 valores passados pelo front-end através do argumento de requisição (req) atravéas do **body-parser**.
+
+67. na linha 67 criamos uma função assíncrona que vai realizar as operações de CRUD com o método **destroy()**.
+- na linha 68 criamos a variável **whereClause** que cria as condições de busca de forma dinamica.
+-na linha 69 passamos para dentro da variável whereClause a variável que tem o nome da coluna e a variável que contém o valor exstente na tabela que deverá ser buscado e excluído: `whereClause[variavel_coluna] : variavel_valor_existente`.
+
+70. na linha 70 criamos a variável que vai receber o método **destroy** `const removerDados = await MeuBanco.destroy()`.
+- na linha 71 passamos para dentro do método destroy um objeto que recebe um where para buscar na tabela o nome da coluna e o valor contido nela, esses valores foram definidos previamente dentro da variável whereClause então passamos ela: `{where: whereClause}` (onde whereClause = [nome_coluna] : valor_coluna).
+
+74. na linha 74 chamamos a função RemoverValor() para iniciar a operação de esclusão no banco de dados.
+
+75. bloco catch para tratamento dos erros com a exclusão.
+
+79. finalizamos com o método **.listen** que recebe dois argumentos, sendo eles a porta que o servidor vai operar e uma função de callback que neste caso estará exibindo um console.log de sucesso ao conectar ao banco de dados (podemos linkar um .then ou .catch para tratar essa função)
+
+
+
+
+
+
+
+
+
+
 

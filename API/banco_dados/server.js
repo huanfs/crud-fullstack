@@ -41,6 +41,41 @@ app.post("/adicionar", async(req, res)=>{
     }
 })
 
+app.post("/atualizar", async (req, res) => {
+    try {
+        const previousValue = req.body.previousValue;
+        const newValue = req.body.newValue;
+        const option = req.body.option;
+
+        async function AtualizarDados() {
+            await MeuBanco.update(
+                { [option]: newValue },
+                { where: { [option]: previousValue } }
+            );
+        }
+        await AtualizarDados();
+    } catch (err) {
+        console.log("Erro ao atualizar os dados no servidor: " + err);
+    }
+});
+
+app.post("/remover", async(req, res)=>{
+    try{
+        const removerValor = req.body.valor;
+        const opcao = req.body.opcao;
+
+        async function RemoverValor(){
+            const whereClause = {};
+            whereClause[opcao] = removerValor;
+            const RemoverValor = await MeuBanco.destroy(
+                {where: whereClause}
+            )
+        }
+        RemoverValor();
+    }catch(err){
+        console.log("não foi possível remover " + req.body.valor +" erro " + err);
+    }
+})
 .listen(port, ()=>{
     console.log(`servidor rodando na porta ${port}`)
 })
