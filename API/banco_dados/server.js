@@ -76,6 +76,30 @@ app.post("/remover", async(req, res)=>{
         console.log("não foi possível remover " + req.body.valor +" erro " + err);
     }
 })
+
+
+//buscando dados (DESENVOLVIMENTO)
+app.post("/listarTudo", async(req, res)=>{
+    try{
+        const option = req.body.option;
+        let list = req.body.list;
+        const ListaDados = await MeuBanco.findAll()
+        if(option === "nome"){
+            list = list.concat(ListaDados.map((user)=>user.nome))
+        }
+        else if(option === "email"){
+            list = list.concat(ListaDados.map((user)=>user.email))
+        }
+        else if(option === "idade"){
+            list = list.concat(ListaDados.map((user)=>user.idade))
+        }
+        console.log(list)
+    }catch(err){
+        console.log("erro ao buscar dados " + err)
+    }
+})
+
+
 .listen(port, ()=>{
     console.log(`servidor rodando na porta ${port}`)
 })
