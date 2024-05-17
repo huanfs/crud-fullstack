@@ -20,14 +20,16 @@ function ListarTodos(){
                     }
                 });
                 //preciso retornar um dados da requisição
+                const response = await buscarDados.json();
+                setList(response);
             }catch(err){
                 console.log("não foi possível enviar a requisição ao servidor " + err)
             }
     }
 
     useEffect(()=>{
-        console.log(list)
-    },[list])
+        list.length=0;
+    },[option])
 
     return(
         <>
@@ -35,7 +37,7 @@ function ListarTodos(){
 
         <div className="list">
             {list.map((item, index) => {
-                return(<p>{item}</p>)
+                return(<p key={index}>{item}</p>)
             })}
         </div>
         <button onClick={BuscarDados}>listar {option}s</button>

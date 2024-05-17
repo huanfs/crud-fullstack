@@ -93,7 +93,7 @@ app.post("/listarTudo", async(req, res)=>{
         else if(option === "idade"){
             list = list.concat(ListaDados.map((user)=>user.idade))
         }
-        console.log(list)
+        res.send(list);//envio dos dados ao front
     }catch(err){
         console.log("erro ao buscar dados " + err)
     }

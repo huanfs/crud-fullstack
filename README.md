@@ -130,9 +130,48 @@
 
     ---
 
+    **Método FindAll**
+    82. na linha 82 temos uma rota para **/listarTudo** e que revebe uma função assíncrona com os parametros de requisição e de resposta **(req, res)**.
+
+    83. na linha 83 iniciamos um bloco **try** para tratamento do sucesso da requisição.
+    - nas linhas 84 e 85 definimos duas variáveis dentro do servidor que irão receber os valores passados do front ao backend através do argumento **req** tratado pelo **body-parser**.
+
+    86. na linha 86 criamos uma variável que vai receber o método **findAll()** .
+    - nas linhas 87, 90 e 93 temos três blocos if/else que irão salvar na lista apenas os valores que correpondam a coluna especificada na condição.
+
+    96. aqui na linha 96 estamos enviando de volta ao front end os dados obtidos com a requisição realizada através do argumento **res** e o método **send**: `res.send(dados_para_o_front)`;
+
+    97. temos o bloco **catch** para tratamento dos erros.
+
 2. # **src**
 
-1. # {!--devo especificar cada uma das funções dentro de cada um dos componentes CRUD!--}
+1. > detalhamento das funções de requisição de cada componente.
+
+    1. **src/components/adicionar.jsx**:
+    - Temos uma função assíncrona _AdicionarDados()_;
+    - Criamos um objeto que recebe os estados _nome, email, idade_ ( é importante observar que ao enviar dados para o servidor, estes dados estejam dentro de um objeto).
+    -  Iniciamos então os blocos de tratamento de erros **try/catch** para lidar com o sucesso e a falha de requisição.
+    - criamos uma variável _AdicionarDados_ que irá realizar o **fetch()** para a url específica para adição de dados na API. `const AdicionarDados = await fetch("url")`.
+        - o método _fetch_ recebe dois argumentos, o primeiro é a url para onde iremos fazer a requisição e o segundo são informações de cabeçalho como o _method, body, headers_.
+    - Por fim o bloco **catch** apenas exibirá uma mensagem no console em caso de falha.
+
+    2. **src/components/atualizar.jsx**
+    - Temos uma função _AtualizarDados()_;
+    - criamos uma variável _dados_ que recebe um objeto:
+        ``
+        const dados = {
+            previousValue: dadoAntigo,
+            newValue: dadoNovo,
+            option: option,
+        }
+        ``
+        >o objeto recebe pares de chave/valor onde a chave será chamada no backend e ela conterá o valor
+    - Iniciamos o bloco de tratamento de erros **try/catch**.
+    - Criamos uma variável _atualizarDados_ que irá receber o método **fetch()**, recebendo a url especifica para realizar o método **update()** no banco de dados e as informações de cabeçalho.
+    - Pro fim temos o bloco **catch** tratando o erro exibindo uma mensagem no console.
+
+    3. **src/components/atualizar.jsx**
+    {!--continua a partir daqui!--}
 
 
 
